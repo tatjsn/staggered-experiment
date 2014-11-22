@@ -4,5 +4,6 @@
     android:layout_height="100dp"
     android:gravity="center"
     android:text="text"
+    android:textSize="40sp"
     android:background="#ff0099">
 </com.example.tat.gridapp.MyCard>

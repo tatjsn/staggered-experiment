@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
     static class Holder extends RecyclerView.ViewHolder {
@@ -20,10 +21,12 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int w = getResources().getDisplayMetrics().widthPixels;
+        int h = getResources().getDisplayMetrics().heightPixels;
         setContentView(R.layout.activity_main);
         RecyclerView list = (RecyclerView) findViewById(R.id.list);
         list.setLayoutManager(new StaggeredGridLayoutManager(
-                2, StaggeredGridLayoutManager.VERTICAL));
+                (w > h) ? 3 : 2, StaggeredGridLayoutManager.VERTICAL));
         list.setAdapter(new RecyclerView.Adapter<Holder>() {
             @Override
             public Holder onCreateViewHolder(ViewGroup viewGroup, int i) {
@@ -34,16 +37,16 @@ public class MainActivity extends Activity {
 
             @Override
             public void onBindViewHolder(Holder viewHolder, int i) {
-                if (i == 0 || i == 1) {
-                    StaggeredGridLayoutManager.LayoutParams lp =
-                            (StaggeredGridLayoutManager.LayoutParams) viewHolder.itemView.getLayoutParams();
-                    lp.setFullSpan(true);
-                }
+                TextView tv = (TextView) viewHolder.itemView;
+                tv.setText("" + i);
+                StaggeredGridLayoutManager.LayoutParams lp =
+                        (StaggeredGridLayoutManager.LayoutParams) viewHolder.itemView.getLayoutParams();
+                lp.setFullSpan((i == 0) ? true : false);
             }
 
             @Override
             public int getItemCount() {
-                return 10;
+                return 100;
             }
         });
     }
